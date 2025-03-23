@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // Datos del usuario (estos deben haber sido almacenados en sesión al registrarse o iniciar sesión)
 $nombre    = $_SESSION['nombre']    ?? 'N/D';
