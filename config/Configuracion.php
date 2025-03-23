@@ -3,7 +3,7 @@ class Configuracion{
 
 private static $instance = null;
 
-private  $rutaServidor ="http://localhost/patayhuella/" ;
+private  $rutaServidor ="http://localhost/patahuella/" ;
 private  $servidorBD ="localhost";
 private  $usuarioBD ="root";
 private  $passwordBD ="";
