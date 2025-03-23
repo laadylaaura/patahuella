@@ -1,0 +1,129 @@
+/* Asegurar que el html y body ocupen todo el alto disponible */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #030720;
+}
+
+/* Estructura principal */
+.content-wrapper {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+    height: 100px;
+    background-color: #d3941e;
+}
+
+/* Estilos para hacer el logo y la navegación de color blanco */
+.navbar-brand {
+  color: white !important;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+}
+
+/* Efecto hover para los enlaces de navegación */
+.navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+#welcome{
+    height: 500px;
+    background-color:#030720 ;
+}
+
+#welcomeText{
+    margin-top: 120px;
+}
+
+#welcome h1:nth-child(1) {
+    color:white;
+    font-weight: bold;
+  }
+
+  #welcome h1:nth-child(2) {
+    color:rgb(170, 68, 0);
+  }
+
+
+.h1-Res{
+    color:rgb(0, 0, 0);
+    text-decoration: underline;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 50px;
+  }
+  .h1-Alo{
+    color:rgb(0, 0, 0);
+    text-decoration: underline;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 50px;
+  }
+  .card {
+    background-color: #eeee97 !important;
+    border-color: white !important;
+    margin-bottom: 20px;
+}
+
+.card-f {
+  border-radius: 15px;
+}
+
+/* Sección de contacto - MODIFICADO CON MARGEN NEGATIVO */
+#seccionContacto {
+    background-color: #eeee97;
+    padding: 50px 0 70px 0; /* Aumentado el padding inferior */
+    margin: 0 0 -20px 0; /* Margen negativo inferior para superponerse */
+    width: 100%;
+    position: relative; /* Para control de posicionamiento */
+    z-index: 1; /* Valor bajo para que esté debajo del footer */
+}
+
+#contenedorContacto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.btn.btn1 {
+    background-color: blue !important;
+    border-color: blue !important;
+    color: #fff !important;
+}
+.btn.btn2 {
+    background-color: rgb(170, 68, 0) !important;
+    border-color: rgb(170, 68, 0) !important;
+    color: #fff !important;
+}
+
+.card-title{
+    color:rgb(0, 0, 0);
+    text-decoration: underline;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22px;
+}
+
+/* Footer - MODIFICADO */
+footer {
+    flex-shrink: 0;
+    background-color: #000000;
+    width: 100%;
+    padding: 30px 0;
+    margin: 0;
+    position: relative; /* Para control de posicionamiento */
+    z-index: 2; /* Valor más alto para superponerse a seccionContacto */
+}
+
