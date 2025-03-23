@@ -35,7 +35,7 @@ $usuarioLogueado = $gestorSesiones->existeSesion("CLAVE");
           <?php if ($usuarioLogueado): ?>
           <!-- Opciones para usuarios logueados -->
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo $ruta; ?>favoritos/listarFovoritos">Favoritos</a>
+            <a class="nav-link" href="<?php echo $ruta; ?>favoritos/listarFavoritos">Favoritos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<?php echo $ruta; ?>usuario/listarMiPerfil">Mi Perfil</a>

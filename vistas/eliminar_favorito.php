@@ -1,27 +1,44 @@
 <?php
-session_start();
+require_once("./lib/GestorSesiones.php");
+$ses = new GestorSesiones();
+
+if (!$ses->existeSesion("CLAVE")) {
+    // Si no hay sesión, redirigir al login
+    require_once("./config/Enrutador.php");
+    $route = new Enrutador();
+    header("Location: ".$route->getRuta()."inicio/sesionLogin");
+    exit();
+}
 
 // Recoger datos mediante GET
 $tipo = $_GET['tipo'] ?? '';
-$nombre = $_GET['nombre'] ?? '';
+$id_negocio = $_GET['id'] ?? '';
 
-if (!empty($tipo) && !empty($nombre)) {
-    // Determinar la clave de sesión según el tipo
-    $clave = ($tipo === 'restaurante') ? 'restaurantes' : 'alojamientos';
+if (!empty($tipo) && !empty($id_negocio)) {
+    // Obtener el ID del usuario de la sesión
+    $usuarioId = $ses->obtenerValorDeSesion("CLAVE");
 
-    if (isset($_SESSION['favoritos'][$clave]) && is_array($_SESSION['favoritos'][$clave])) {
-        // Buscar el elemento que coincida con el nombre enviado
-        foreach ($_SESSION['favoritos'][$clave] as $index => $item) {
-            if ($item['nombre'] === urldecode($nombre)) {
-                unset($_SESSION['favoritos'][$clave][$index]);
-                // Reindexar el array para evitar huecos
-                $_SESSION['favoritos'][$clave] = array_values($_SESSION['favoritos'][$clave]);
-                break;
-            }
-        }
+    // Incluir el modelo de favoritos
+    require_once("./modelo/FavoritosModelo.php");
+    $modeloFavoritos = new FavoritoModelo();
+    
+    // Intentar eliminar el favorito
+    if ($modeloFavoritos->getEliminarFavorito($usuarioId, $id_negocio)) {
+        // Redirigir de vuelta al perfil con mensaje de éxito
+        require_once("./config/Enrutador.php");
+        $route = new Enrutador();
+        header("Location: ".$route->getRuta()."usuario/listarMiPerfil?mensaje=eliminado");
+    } else {
+        // Redirigir de vuelta al perfil con mensaje de error
+        require_once("./config/Enrutador.php");
+        $route = new Enrutador();
+        header("Location: ".$route->getRuta()."usuario/listarMiPerfil?error=eliminacion");
     }
+} else {
+    // Si no hay parámetros, redirigir al perfil
+    require_once("./config/Enrutador.php");
+    $route = new Enrutador();
+    header("Location: ".$route->getRuta()."usuario/listarMiPerfil");
 }
-
-header("Location: mi_perfil.php");
 exit();
 ?>

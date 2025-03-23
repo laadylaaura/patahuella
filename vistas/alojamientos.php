@@ -67,7 +67,7 @@ $alojamientos = [
                                     <p><strong>Servicios:</strong> <?php echo htmlspecialchars($alojamiento['servicios']); ?></p>
                                     <a href="<?php echo htmlspecialchars($alojamiento['web']); ?>" target="_blank" 
                                        class="btn btn-primary">Visitar web</a>
-                                    <a href="agregar_favorito.php?tipo=alojamiento&amp;nombre=<?php echo urlencode($alojamiento['nombre']); ?>" 
+                                    <a href="<?php echo $ruta; ?>usuario/agregarFavorito?tipo=alojamiento&amp;id=<?php echo urlencode($alojamiento['id']); ?>" 
                                        class="btn btn2 ms-2">Agregar a Favoritos</a>
                                 </div>
                             </div>

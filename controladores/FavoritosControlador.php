@@ -11,8 +11,8 @@ class FavoritosControlador {
         
         if($ses->existeSesion("CLAVE")){
             require_once("./modelo/FavoritosModelo.php");
-            $modelo = new FavoritosModelo();
-            $data = $modelo->obtenerFavoritos($ses->getSesion("CLAVE"));
+            $modelo = new FavoritoModelo();
+            $data = $modelo->getListadoFavoritos($ses->obtenerValorDeSesion("CLAVE"));
             
             require_once("./vistas/Vista.php");
             $vista = new Vista();
@@ -33,8 +33,8 @@ class FavoritosControlador {
         if($ses->existeSesion("CLAVE")){
             if(isset($_POST["id_producto"])){
                 require_once("./modelo/FavoritosModelo.php");
-                $modelo = new FavoritosModelo();
-                $resultado = $modelo->agregarFavorito($ses->getSesion("CLAVE"), $_POST["id_producto"]);
+                $modelo = new FavoritoModelo();
+                $resultado = $modelo->agregarFavorito($ses->obtenerValorDeSesion("CLAVE"), $_POST["id_producto"]);
                 
                 if($resultado){
                     echo json_encode(["success" => true, "message" => "Producto agregado a favoritos"]);
@@ -55,8 +55,8 @@ class FavoritosControlador {
         if($ses->existeSesion("CLAVE")){
             if(isset($_POST["id_producto"])){
                 require_once("./modelo/FavoritosModelo.php");
-                $modelo = new FavoritosModelo();
-                $resultado = $modelo->eliminarFavorito($ses->getSesion("CLAVE"), $_POST["id_producto"]);
+                $modelo = new FavoritoModelo();
+                $resultado = $modelo->eliminarFavorito($ses->obtenerValorDeSesion("CLAVE"), $_POST["id_producto"]);
                 
                 if($resultado){
                     echo json_encode(["success" => true, "message" => "Producto eliminado de favoritos"]);

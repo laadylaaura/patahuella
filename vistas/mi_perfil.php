@@ -1,15 +1,62 @@
 <?php
+require_once("./lib/GestorSesiones.php");
+$ses = new GestorSesiones();
 
-// Datos del usuario (estos deben haber sido almacenados en sesión al registrarse o iniciar sesión)
-$nombre    = $_SESSION['nombre']    ?? 'N/D';
-$apellidos = $_SESSION['apellidos'] ?? 'N/D';
-$email     = $_SESSION['email']     ?? 'N/D';
+if (!$ses->existeSesion("CLAVE")) {
+    // Si no hay sesión, redirigir al login
+    require_once("./config/Enrutador.php");
+    $route = new Enrutador();
+    header("Location: ".$route->getRuta()."inicio/sesionLogin");
+    exit();
+}
 
-// Los favoritos se guardan en sesión mediante un array con dos claves: 'restaurantes' y 'alojamientos'
-$favoritos = $_SESSION['favoritos'] ?? [
+// Obtener el ID del usuario de la sesión
+$usuarioId = $ses->obtenerValorDeSesion("CLAVE");
+
+// Obtener datos del usuario desde la BD
+require_once("./modelo/UsuarioModelo.php");
+$modelo = new UsuarioModelo();
+$usuario = $modelo->getObtenerUsuarioPorId($usuarioId);
+
+if (!$usuario) {
+    // Si no se encuentra el usuario, redirigir al login
+    require_once("./config/Enrutador.php");
+    $route = new Enrutador();
+    header("Location: ".$route->getRuta()."inicio/sesionLogin");
+    exit();
+}
+
+// Obtener favoritos desde la BD
+require_once("./modelo/FavoritosModelo.php");
+$modeloFavoritos = new FavoritoModelo();
+$favoritos = $modeloFavoritos->getListadoFavoritos($usuarioId);
+
+// Separar favoritos por tipo
+$favoritosSeparados = [
     'restaurantes' => [],
     'alojamientos' => []
 ];
+
+foreach ($favoritos as $favorito) {
+    // Obtener detalles del negocio
+    require_once("./modelo/NegocioModelo.php");
+    $modeloNegocio = new NegocioModelo();
+    $resultado = $modeloNegocio->getNegocioPorId($favorito['id_negocio']);
+    
+    // Verificar que el resultado sea un array y tenga elementos
+    if (is_array($resultado) && count($resultado) > 0) {
+        $negocio = $resultado[0]; // Tomar el primer elemento del array
+        
+        // Verificar que el negocio tenga el campo tipo_negocio
+        if (isset($negocio['tipo_negocio'])) {
+            if ($negocio['tipo_negocio'] === 'restaurante') {
+                $favoritosSeparados['restaurantes'][] = $negocio;
+            } else if ($negocio['tipo_negocio'] === 'hotel') {
+                $favoritosSeparados['alojamientos'][] = $negocio;
+            }
+        }
+    }
+}
 
 include 'inc/header.php';
 ?>
@@ -25,13 +72,12 @@ include 'inc/header.php';
       <!-- Caja para Datos Personales -->
       <div class="card h-100 border border-dark p-4 rounded mb-4">
         <h5 class="card-title text-center">Datos Personales</h5>
-        <p><strong>Nombre:</strong> <?php echo htmlspecialchars($nombre); ?></p>
-        <p><strong>Apellidos:</strong> <?php echo htmlspecialchars($apellidos); ?></p>
-        <p><strong>Email:</strong> <?php echo htmlspecialchars($email); ?></p>
+        <p><strong>Nombre:</strong> <?php echo htmlspecialchars($usuario['nombre']); ?></p>
+        <p><strong>Email:</strong> <?php echo htmlspecialchars($usuario['email']); ?></p>
         
         <!-- Botón para editar perfil -->
         <div class="mt-3">
-          <a href="editar_perfil.php" class="btn btn2">Editar Perfil</a>
+          <a href="<?php echo $ruta; ?>usuario/editarPerfil" class="btn btn2">Editar Perfil</a>
         </div>
       </div>
     </div>
@@ -45,11 +91,11 @@ include 'inc/header.php';
           <!-- Restaurantes Favoritos -->
           <div class="col-md-6">
             <h5 class="text-decoration-underline">Restaurantes</h5>
-            <?php if (!empty($favoritos['restaurantes'])): ?>
-              <?php foreach ($favoritos['restaurantes'] as $restaurante): ?>
+            <?php if (!empty($favoritosSeparados['restaurantes'])): ?>
+              <?php foreach ($favoritosSeparados['restaurantes'] as $restaurante): ?>
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span><?php echo htmlspecialchars($restaurante['nombre']); ?></span>
-                  <a href="eliminar_favorito.php?tipo=restaurante&amp;nombre=<?php echo urlencode($restaurante['nombre']); ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                  <a href="<?php echo $ruta; ?>usuario/eliminarFavorito?tipo=restaurante&amp;id=<?php echo urlencode($restaurante['id_negocio']); ?>" class="btn btn-danger btn-sm">Eliminar</a>
                 </div>
               <?php endforeach; ?>
             <?php else: ?>
@@ -60,11 +106,11 @@ include 'inc/header.php';
           <!-- Alojamientos Favoritos -->
           <div class="col-md-6">
             <h5 class="text-decoration-underline">Alojamientos</h5>
-            <?php if (!empty($favoritos['alojamientos'])): ?>
-              <?php foreach ($favoritos['alojamientos'] as $alojamiento): ?>
+            <?php if (!empty($favoritosSeparados['alojamientos'])): ?>
+              <?php foreach ($favoritosSeparados['alojamientos'] as $alojamiento): ?>
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span><?php echo htmlspecialchars($alojamiento['nombre']); ?></span>
-                  <a href="eliminar_favorito.php?tipo=alojamiento&amp;nombre=<?php echo urlencode($alojamiento['nombre']); ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                  <a href="<?php echo $ruta; ?>usuario/eliminarFavorito?tipo=alojamiento&amp;id=<?php echo urlencode($alojamiento['id_negocio']); ?>" class="btn btn-danger btn-sm">Eliminar</a>
                 </div>
               <?php endforeach; ?>
             <?php else: ?>

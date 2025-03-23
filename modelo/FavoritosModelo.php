@@ -8,7 +8,7 @@ class FavoritoModelo{
 
     public function getListadoFavoritos($id_usuario)
     {
-        require_once("../lib/GestorBD.php");
+        require_once("./lib/GestorBD.php");
         $gbd = new GestorBD();
         $consulta = "SELECT * FROM Favoritos WHERE id_usuario = ?";
         
@@ -47,15 +47,14 @@ class FavoritoModelo{
     }
 
     
-    public function getEliminarFavorito($id_favorito){
-        require_once("../lib/GestorBD.php");
+    public function getEliminarFavorito($id_usuario, $id_negocio){
+        require_once(__DIR__ . "/../lib/GestorBD.php");
         $gbd = new GestorBD();
-        $consulta = "DELETE  FROM Favoritos WHERE id_favorito = ?";
+        $consulta = "DELETE FROM Favoritos WHERE id_usuario = ? AND id_negocio = ?";
 
-        $resultado = $gbd->consultaEliminar($consulta, $id_usuario);
+        $resultado = $gbd->consultaEliminar($consulta, $id_usuario, $id_negocio);
 
         return $resultado;
-
     }
 
    
