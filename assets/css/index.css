@@ -20,9 +20,21 @@ body {
 }
 
 /* Header */
+
+
 header {
-    height: 100px;
-    background-color: #d3941e;
+  height: 700px;
+  background-color: #d3941e;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
+  width: 100%;
+}
+
+/* Opcional: ajusta el estilo de la navbar si es necesario */
+.navbar {
+  padding: 1rem 0; /* Ajusta el padding si lo deseas */
+  margin: 0;
 }
 
 /* Estilos para hacer el logo y la navegación de color blanco */
