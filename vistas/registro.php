@@ -1,50 +1,38 @@
 <?php
 include 'inc/header.php';
+
+// Definir variables por defecto para evitar "undefined variable"
+$errores = isset($errores) ? $errores : [];
+$exito = isset($exito) ? $exito : null;
+$nombre = isset($nombre) ? $nombre : '';
+$email = isset($email) ? $email : '';
+$ruta = isset($ruta) ? $ruta : '/'; // Ajusta según tu enrutador
 ?>
+
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="../assets/css/index.css" rel="stylesheet">
 <!-- Font Awesome para los iconos -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-<div class="container mt-5 mb-5 pb-5">
-  <h2 class="text-center mb-4 text-white text-decoration-underline">Registro</h2>
+<div class="container mt-5 mb-5 pb-5"  >
+  <h2 class="text-center mb-4 text-white">Registro</h2>
   
-  <div class="row justify-content-center">
+  <div class="row justify-content-center" id = "registroContainer">
     <div class="col-md-6 col-lg-5">
       <div class="card-f bg-light p-3 rounded">
-        <div class="card-header bg-transparent border-0">
-          <h4 class="mb-0 text-center">Crea tu cuenta</h4>
-        </div>
-        
         <div class="card-body">
-          <?php if (isset($errores) && !empty($errores)): ?>
-            <div class="alert alert-danger">
-              <ul class="mb-0">
-                <?php foreach ($errores as $error): ?>
-                  <li><?php echo $error; ?></li>
-                <?php endforeach; ?>
-              </ul>
-            </div>
-          <?php endif; ?>
-          
-          <?php if (isset($exito)): ?>
-            <div class="alert alert-success">
-              <?php echo $exito; ?>
-            </div>
-          <?php endif; ?>
-          
-          <form action="<?php echo $ruta; ?>usuario/registrar" method="post">
+          <form action="<?php echo htmlspecialchars($ruta); ?>usuario/registrar" method="post">
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre completo</label>
               <input type="text" class="form-control" id="nombre" name="nombre" 
-                     value="<?php echo isset($nombre) ? htmlspecialchars($nombre) : ''; ?>" 
+                     value="<?php echo htmlspecialchars($nombre); ?>" 
                      placeholder="Tu nombre completo" required>
             </div>
             
             <div class="mb-3">
               <label for="email" class="form-label">Correo electrónico</label>
               <input type="email" class="form-control" id="email" name="email" 
-                     value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>" 
+                     value="<?php echo htmlspecialchars($email); ?>" 
                      placeholder="nombre@ejemplo.com" required>
             </div>
             
@@ -65,15 +53,28 @@ include 'inc/header.php';
               <button type="submit" class="btn btn2">Registrarme</button>
             </div>
           </form>
+
+          <!-- Mostrar errores si existen (ahora abajo del formulario) -->
+          <?php if (!empty($errores)): ?>
+            <div class="alert alert-danger mt-3">
+              <ul class="mb-0">
+                <?php foreach ($errores as $error): ?>
+                  <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          <?php endif; ?>
           
-          <!-- Separador -->
-          <div class="d-flex align-items-center my-4">
-            <hr class="flex-grow-1">
-            <span class="mx-3">o regístrate con</span>
-            <hr class="flex-grow-1">
-          </div>
+          <!-- Mostrar mensaje de éxito si existe (también abajo) -->
+          <?php if (!empty($exito)): ?>
+            <div class="alert alert-success mt-3">
+              <?php echo htmlspecialchars($exito); ?>
+            </div>
+          <?php endif; ?>
+        </div>
+        
         <div class="card-footer bg-transparent border-0 text-center">
-          <p class="mb-0">¿Ya tienes una cuenta? <a href="<?php echo $ruta; ?>inicio/sesionLogin">Iniciar sesión</a></p>
+          <p class="mb-0">¿Ya tienes una cuenta? <a href="<?php echo htmlspecialchars($ruta); ?>inicio/sesionLogin">Iniciar sesión</a></p>
         </div>
       </div>
     </div>

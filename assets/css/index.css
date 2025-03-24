@@ -96,6 +96,10 @@ header {
     align-items: center;
 }
 
+#registroContainer{
+  background-color: #030720;
+}
+
 
 
 .btn.btn1 {
