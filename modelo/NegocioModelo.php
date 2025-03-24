@@ -72,11 +72,11 @@ class NegocioModelo
     }
 
     // Devuelve un array con los url de las 4 imagenes del negocio
-    public function getImagenesNegocio($id_negocio)
+    public function getImagenesporNegocio($id_negocio)
     {
         require_once(__DIR__ . "/../lib/GestorBD.php");
         $gbd = new GestorBD();
-        $consulta = "SELECT * FROM ImagenesNegocio WHERE id_negocio = ? ORDER BY num_imagen ASC";
+        $consulta = "SELECT * FROM ImagenesNegocios WHERE id_negocio = ? ORDER BY num_imagen ASC";
         $resultado = $gbd->consultaLectura($consulta, $id_negocio);
 
         return $resultado;

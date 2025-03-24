@@ -15,7 +15,7 @@ class GestorBD
  public static function conectar()
  {
    if (self::$conn === null) {
-     require_once './config/Configuracion.php';
+     require_once __DIR__ . '/../config/Configuracion.php'; // Ruta corregida
      $conf = Configuracion::getInstance();
      $servidor = $conf->getServidorBD();
      $usuario = $conf->getUsuarioBD();

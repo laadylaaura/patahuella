@@ -1,7 +1,7 @@
 <?php
 
-require_once("./modelo/NegocioModelo.php");
-require_once("./vistas/Vista.php");
+require_once __DIR__ . '/../modelo/NegocioModelo.php';
+require_once __DIR__ . '/../vistas/Vista.php';
 
 class NegocioControlador
 {
@@ -56,17 +56,18 @@ class NegocioControlador
         try {
             $negocios = $this->modelo->getListadoTipoNegocio($tipo);
             if (!$negocios) {
-                $data["error"] = "No se encontraron negocios de este tipo.";
-            } else {
-                $data["negocios"] = $negocios;
-                $data["tipo"] = $tipo;
+                return ["error" => "No se encontraron negocios de este tipo."];
             }
-        } catch (Exception $e) {
-            $data["error"] = "Error al obtener negocios por tipo: " . $e->getMessage();
-        }
 
-        $vista = new Vista();
-        $vista->render("negocios_tipo", $data ?? []);
+            // Agregar imágenes a cada negocio
+            foreach ($negocios as &$negocio) {
+                $negocio['imagenes'] = $this->modelo->getImagenesPorNegocio($negocio['id_negocio']);
+            }
+
+            return ["negocios" => $negocios, "tipo" => $tipo];
+        } catch (Exception $e) {
+            return ["error" => "Error al obtener negocios por tipo: " . $e->getMessage()];
+        }
     }
 
     // Obtener negocios recomendados

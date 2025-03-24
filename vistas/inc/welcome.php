@@ -6,12 +6,13 @@
           <h1 class="fw-light"><strong>en Barcelona</strong></h1>
         </div>
         <div class="mt-4">
-          <a href="./vistas/alojamientos.php" class="btn btn-light btn-lg mx-2 rounded-circle" title="Alojamientos">
+          <a href="vistas/alojamientos.php" class="btn btn-light btn-lg mx-2 rounded-circle" title="Alojamientos">
             <img src="./assets/imagenesNegocio/cama.png" width="65" height="65" alt="Cama de perro">
           </a>
-          <a href="./vistas/restaurantes.php" class="btn btn-light btn-lg mx-2 rounded-circle" title="Restaurantes">
+          <a href="vistas/restaurantes.php" class="btn btn-light btn-lg mx-2 rounded-circle" title="Restaurantes">
             <img src="./assets/imagenesNegocio/comederoMascotas.png" width="65" height="65" alt="Perro con hueso">
           </a>
+
         </div>
       </div>
     </div>
