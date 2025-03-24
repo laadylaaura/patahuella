@@ -82,6 +82,16 @@ class UsuarioControlador {
         $vista = new Vista();
         $vista->render("editar_perfil", ["usuario" => $usuario]);
     }
+
+    public function registro()
+    {
+        // Mostrar formulario de registro
+        require_once("./vistas/Vista.php");
+        $vista = new Vista();
+        $vista->render("registro", []);
+    }
+
+    
     
     public function registrar()
     {

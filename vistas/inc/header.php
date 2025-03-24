@@ -43,9 +43,6 @@ $usuarioLogueado = $gestorSesiones->existeSesion("CLAVE");
           <li class="nav-item">
             <a class="nav-link" href="<?php echo $ruta; ?>inicio/cerrarSesion">Cerrar sesión</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Registrarse</a>
-          </li>
           <?php else: ?>
           <!-- Opciones para usuarios no logueados -->
           <li class="nav-item">
