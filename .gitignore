@@ -1,0 +1,52 @@
+# Archivos y directorios generados por el sistema operativo
+*.log
+*.DS_Store        # macOS
+Thumbs.db         # Windows
+
+# Archivos de caché y temporales
+*.cache
+*.tmp
+*.bak
+*.swp
+
+# Dependencias de PHP (Composer)
+vendor/           # Ignora las librerías instaladas por Composer
+composer.lock     # Opcional: ignóralo si no quieres versionar las versiones exactas
+
+# Archivos de configuración sensibles
+config.php        # Si contiene claves o datos sensibles
+.env              # Archivos de variables de entorno (como claves de DB)
+*.env.*           # Variaciones de .env (como .env.local)
+
+# Archivos de base de datos
+*.sql             # Ignora archivos SQL con datos o volcados
+*.sqlite          # Ignora bases de datos SQLite si las usas
+
+# Dependencias de JavaScript (Node.js)
+node_modules/     # Ignora las librerías instaladas por npm o yarn
+package-lock.json # Opcional: ignóralo si no quieres versionar las versiones exactas
+yarn.lock         # Opcional: si usas Yarn
+
+# Archivos generados por compiladores o bundlers
+dist/             # Carpeta de salida para builds (como Vite, Webpack, etc.)
+build/            # Otra carpeta común para builds
+*.min.js          # Archivos minificados de JS
+*.min.css         # Archivos minificados de CSS
+
+# Archivos de editores y herramientas
+.idea/            # Ignora configuraciones de PhpStorm o IntelliJ
+.vscode/          # Ignora configuraciones de Visual Studio Code (opcional)
+*.sublime-*       # Ignora configuraciones de Sublime Text
+
+# Archivos de pruebas o logs
+tests/logs/       # Si tienes logs generados por pruebas
+coverage/         # Resultados de cobertura de pruebas
+
+# Archivos comprimidos o backups
+*.zip
+*.tar.gz
+*.rar
+
+# Otros archivos innecesarios
+*.bak             # Backups
+*.old             # Versiones antiguas
