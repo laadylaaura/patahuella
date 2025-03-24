@@ -103,7 +103,7 @@ include 'inc/header.php';
     <?php endif; ?>
 </div>
 
-<?php include '../vistas/resenasAlojamientos.php'; ?>
+<!-- <?php include '../vistas/resenasAlojamientos.php'; ?> -->
 <?php include 'inc/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
