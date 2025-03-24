@@ -93,27 +93,88 @@ class UsuarioControlador {
 
     
     
+   
     public function registrar()
     {
-        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nombre = $_POST['nombre'];
-            $email = $_POST['email'];
-            $contrasena = $_POST['contrasena'];
-
-            require_once("./modelo/CrearModelo.php");
-            $modelo = new CrearModelo();
-            $resultado = $modelo->insertarUsuario($nombre, $email, $contrasena);
-
-            if ($resultado) {
-                echo "Usuario registrado con éxito.";
+            // Validar datos de entrada
+            $errores = [];
+            
+            // Recoger los datos del formulario
+            $nombre = trim($_POST['nombre'] ?? '');
+            $email = trim($_POST['email'] ?? '');
+            $contrasena = trim($_POST['contrasena'] ?? '');
+            $confirmar_contrasena = trim($_POST['confirmar_contrasena'] ?? '');
+            
+            // Realizar validaciones
+            if (empty($nombre)) {
+                $errores[] = "El nombre es obligatorio";
+            }
+            
+            if (empty($email)) {
+                $errores[] = "El correo electrónico es obligatorio";
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errores[] = "El formato del correo electrónico no es válido";
+            }
+            
+            if (empty($contrasena)) {
+                $errores[] = "La contraseña es obligatoria";
+            } elseif (strlen($contrasena) < 6) {
+                $errores[] = "La contraseña debe tener al menos 6 caracteres";
+            }
+            
+            if ($contrasena !== $confirmar_contrasena) {
+                $errores[] = "Las contraseñas no coinciden";
+            }
+            
+            // Si hay errores, volver al formulario con los mensajes
+            if (!empty($errores)) {
+                require_once("./vistas/Vista.php");
+                $vista = new Vista();
+                $vista->render("registro", [
+                    'errores' => $errores,
+                    'nombre' => $nombre,
+                    'email' => $email
+                ]);
+                return;
+            }
+            
+            // Si no hay errores, proceder con el registro
+            require_once("./modelo/UsuarioModelo.php");
+            $modelo = new UsuarioModelo();
+            $resultado = $modelo->registrarUsuario($nombre, $email, $contrasena);
+            
+            if ($resultado['exito']) {
+                // Opción 1: Redirigir a login con mensaje de éxito
+                require_once("./config/Enrutador.php");
+                $route = new Enrutador();
+                header("Location: ".$route->getRuta()."inicio/sesionLogin?registro=exito");
+                exit();
+                
+                // Opción 2 (alternativa): Iniciar sesión automáticamente después del registro
+                /*
+                require_once("./lib/GestorSesiones.php");
+                $ses = new GestorSesiones();
+                $ses->crearSesion("CLAVE", $resultado['id_usuario']);
+                
+                require_once("./config/Enrutador.php");
+                $route = new Enrutador();
+                header("Location: ".$route->getRuta()."Usuario/listarMiPerfil");
+                exit();
+                */
             } else {
-                echo "Error al registrar el usuario.";
+                // Volver al formulario con mensaje de error
+                require_once("./vistas/Vista.php");
+                $vista = new Vista();
+                $vista->render("registro", [
+                    'errores' => [$resultado['mensaje']],
+                    'nombre' => $nombre,
+                    'email' => $email
+                ]);
             }
         } else {
-            require_once("./vistas/index.php");
-            $vista = new Vista();
-            $vista->render("registro", []);
+            // Si no es una petición POST, redirigir al formulario de registro
+            $this->registro();
         }
     }
 

@@ -41,14 +41,14 @@ class UsuarioModelo
         }
     }
    
-    public function getRegistrarUsuario($nombre, $email, $contrasena)
+    public function registrarUsuario($nombre, $email, $contrasena)
     {
         require_once("./lib/GestorBD.php");
         $gbd = new GestorBD();
 
         // Primero verificamos si el usuario ya existe
-        $consultaVerificar = "SELECT COUNT(*) as contador FROM Usuarios WHERE email = ?";
-        $resultado = $gbd->consultaLectura($consultaVerificar, $email);
+        $sqlVerificar = "SELECT COUNT(*) as contador FROM Usuarios WHERE email = ?";
+        $resultado = $gbd->consultaLectura($sqlVerificar, $email);
 
         // Si el usuario ya existe, retornamos false
         if (is_array($resultado) && count($resultado) > 0 && $resultado[0]['contador'] > 0) {
@@ -58,9 +58,9 @@ class UsuarioModelo
             ];
         }
         
-        
-        $consulta = "INSERT INTO Usuarios (nombre, email, contrasena) VALUES (?, ?, ?)";
-        $resultado = $gbd->consultaInsercion($consulta, $nombre, $email, $contrasena);
+        // Si el usuario no existe, lo insertamos (sin hash de contraseña)
+        $sqlInsertar = "INSERT INTO Usuarios (nombre, email, contrasena) VALUES (?, ?, ?)";
+        $resultado = $gbd->consultaInsercion($sqlInsertar, $nombre, $email, $contrasena);
 
         // Retornamos true si la inserción fue exitosa
         if ($resultado !== false) {
