@@ -13,9 +13,6 @@
     <link href="<?php echo $ruta; ?>assets/css/index.css" rel="stylesheet">
   </head>
   <body>
-    
-
-
 
 
 <?php

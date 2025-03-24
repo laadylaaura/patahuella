@@ -111,7 +111,7 @@ function conectarBD() {
 function obtenerRestaurantesPopulares($conexion) {
     $sql = "SELECT n.*, i.ruta_imagen, AVG(r.puntuacion) as rating, COUNT(r.id_resena) as visitas
             FROM Negocios n
-            LEFT JOIN ImagenesNegocios i ON n.id_negocio = i.id_negocio
+            LEFT JOIN ImagenesNegocios i ON n.id_negocio = i.id_negocio AND i.num_imagen = 1
             LEFT JOIN Resenas r ON n.id_negocio = r.id_negocio
             WHERE n.tipo_negocio = 'restaurante' AND n.activo = 1
             GROUP BY n.id_negocio
@@ -121,12 +121,16 @@ function obtenerRestaurantesPopulares($conexion) {
     $restaurantes = [];
     if ($resultado->num_rows > 0) {
         while($fila = $resultado->fetch_assoc()) {
+            $ruta_imagen = isset($fila['ruta_imagen']) && !empty($fila['ruta_imagen']) 
+                ? './assets/imagenesNegocio/' . $fila['ruta_imagen']
+                : './assets/imagenesNegocio/default.jpg';
+                
             $restaurantes[] = [
                 'id' => $fila['id_negocio'],
                 'nombre' => $fila['nombre'],
                 'descripcion' => $fila['descripcion'],
                 'direccion' => $fila['direccion'],
-                'imagen' => '../assets/imagenesNegocio/' . $fila['ruta_imagen'],
+                'imagen' => $ruta_imagen,
                 'visitas' => $fila['visitas'] ?? 0,
                 'rating' => $fila['rating'] ?? 0
             ];
@@ -138,7 +142,7 @@ function obtenerRestaurantesPopulares($conexion) {
 function obtenerAlojamientosPopulares($conexion) {
     $sql = "SELECT n.*, i.ruta_imagen, AVG(r.puntuacion) as rating, COUNT(r.id_resena) as visitas
             FROM Negocios n
-            LEFT JOIN ImagenesNegocios i ON n.id_negocio = i.id_negocio
+            LEFT JOIN ImagenesNegocios i ON n.id_negocio = i.id_negocio AND i.num_imagen = 1
             LEFT JOIN Resenas r ON n.id_negocio = r.id_negocio
             WHERE n.tipo_negocio = 'hotel' AND n.activo = 1
             GROUP BY n.id_negocio
@@ -148,12 +152,16 @@ function obtenerAlojamientosPopulares($conexion) {
     $alojamientos = [];
     if ($resultado->num_rows > 0) {
         while($fila = $resultado->fetch_assoc()) {
+            $ruta_imagen = isset($fila['ruta_imagen']) && !empty($fila['ruta_imagen']) 
+                ? './assets/imagenesNegocio/' . $fila['ruta_imagen']
+                : './assets/imagenesNegocio/default.jpg';
+                
             $alojamientos[] = [
                 'id' => $fila['id_negocio'],
                 'nombre' => $fila['nombre'],
                 'descripcion' => $fila['descripcion'],
                 'direccion' => $fila['direccion'],
-                'imagen' => '../assets/imagenesNegocio/' . $fila['ruta_imagen'],
+                'imagen' => $ruta_imagen,
                 'visitas' => $fila['visitas'] ?? 0,
                 'rating' => $fila['rating'] ?? 0
             ];
@@ -251,7 +259,7 @@ $conexion->close();
     </section>
 
     <!-- Reseñas mejor valoradas -->
-    <section class="mb-5">
+    <!-- <section class="mb-5">
         <h2 class="text-center mb-4 text-white text-decoration-underline">Últimas reseñas destacadas</h2>
         <div class="row">
             <?php foreach ($mejoresResenas as $resena): ?>
@@ -275,6 +283,6 @@ $conexion->close();
                 </div>
             <?php endforeach; ?>
         </div>
-    </section>
+    </section> -->
 </div>
 
