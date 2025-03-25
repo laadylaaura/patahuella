@@ -1,5 +1,5 @@
 <?php
-include '../vistas/inc/header.php';
+include 'inc/header.php';
 ?>
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="../assets/css/index.css" rel="stylesheet">
@@ -20,24 +20,38 @@ include '../vistas/inc/header.php';
       <div class="col-lg-6">
         <div class="bg-light p-4 rounded">
           <h2 class="mb-4">Contacta con nosotros</h2>
-          <form>
+          
+          <!-- Mostrar mensajes de error o éxito si existen -->
+          <?php if(isset($data["errorvalidacion"])): ?>
+          <div class="alert alert-danger">
+              <?php echo $data["errorvalidacion"]; ?>
+          </div>
+          <?php endif; ?>
+          
+          <?php if(isset($data["mensaje"])): ?>
+          <div class="alert alert-<?php echo $data["tipo"]; ?>">
+              <?php echo $data["mensaje"]; ?>
+          </div>
+          <?php endif; ?>
+          
+          <form action="<?php echo $ruta; ?>contacto/procesarContacto" method="POST">
             <div class="row mb-3">
               <div class="col-md-6">
-                <label for="name" class="form-label">Nombre:</label>
-                <input type="text" class="form-control" id="name" placeholder="Escribe aquí tu nombre">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escribe aquí tu nombre" required>
               </div>
               <div class="col-md-6">
-                <label for="surname" class="form-label">Apellidos:</label>
-                <input type="text" class="form-control" id="surname" placeholder="Escribe aquí tus apellidos">
+                <label for="apellido" class="form-label">Apellidos:</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Escribe aquí tus apellidos" required>
               </div>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email:</label>
-              <input type="email" class="form-control" id="email" placeholder="nombre@email.com">
+              <input type="email" class="form-control" id="email" name="email" placeholder="nombre@email.com" required>
             </div>
             <div class="mb-3">
-              <label for="textarea" class="form-label">Mensaje:</label>
-              <textarea class="form-control" id="textarea" rows="5" placeholder="Escribe tu mensaje aquí"></textarea>
+              <label for="mensaje" class="form-label">Mensaje:</label>
+              <textarea class="form-control" id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí" required></textarea>
             </div>
             <button type="submit" class="btn btn2">Enviar</button>
           </form>
@@ -47,5 +61,5 @@ include '../vistas/inc/header.php';
   </div>
 </section>
 <?php
-include '../vistas/inc/footer.php';
+include 'inc/footer.php';
 ?>

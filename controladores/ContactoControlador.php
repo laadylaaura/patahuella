@@ -24,11 +24,14 @@ class ContactoControlador {
     public function procesarContacto()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nombre = $_POST['firstName'] . ' ' . $_POST['lastName'];
-            $email = $_POST['email'];
-            $mensaje = $_POST['message'];
+            // Obtenemos los datos del formulario
+            $nombre = isset($_POST['nombre']) ? trim($_POST['nombre']) : '';
+            $apellido = isset($_POST['apellido']) ? trim($_POST['apellido']) : '';
+            $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+            $mensaje = isset($_POST['mensaje']) ? trim($_POST['mensaje']) : '';
 
-            if (empty($nombre) || empty($email) || empty($mensaje)) {
+            // Validamos que todos los campos estén completos
+            if (empty($nombre) || empty($apellido) || empty($email) || empty($mensaje)) {
                 $data["errorvalidacion"] = "Por favor, complete todos los campos del formulario.";
                 require_once("./vistas/Vista.php");
                 $vista = new Vista();
@@ -36,6 +39,7 @@ class ContactoControlador {
                 return;
             }
 
+            // Validamos el formato del email
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $data["errorvalidacion"] = "Por favor, ingrese un correo electrónico válido.";
                 require_once("./vistas/Vista.php");
@@ -44,32 +48,26 @@ class ContactoControlador {
                 return;
             }
 
-            // Procesar el mensaje
+            // Guardamos el mensaje en la base de datos
             require_once("./modelo/ContactoModelo.php");
             $modelo = new ContactoModelo();
             
-            // Intentar guardar en la base de datos
-            $guardado = $modelo->guardarMensaje($nombre, $email, $mensaje);
+            $guardado = $modelo->guardarMensaje($nombre, $apellido, $email, $mensaje);
             
-            // Intentar enviar el email
-            $enviado = $modelo->enviarEmail($nombre, $email, $mensaje);
-            
-            if ($guardado && $enviado) {
-                $data["mensaje"] = "¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.";
+        
+            if ($guardado) {
+                $data["mensaje"] = "¡Gracias por contactarnos! Hemos recibido tu mensaje y nos pondremos en contacto contigo pronto.";
                 $data["tipo"] = "success";
             } else {
-                if (!$guardado) {
-                    $data["mensaje"] = "Hubo un problema al guardar tu mensaje. Por favor, intenta nuevamente.";
-                } else {
-                    $data["mensaje"] = "Tu mensaje ha sido recibido, pero hubo un problema al enviar la confirmación por email.";
-                }
-                $data["tipo"] = "warning";
+                $data["mensaje"] = "Hubo un problema al guardar tu mensaje. Por favor, intenta nuevamente.";
+                $data["tipo"] = "danger";
             }
             
             require_once("./vistas/Vista.php");
             $vista = new Vista();
-            $vista->render("procesar_contacto", $data);
+            $vista->render("contacto", $data);
         } else {
+            // Si no es una petición POST, redirigimos al formulario
             require_once("./config/Enrutador.php");
             $route = new Enrutador();
             header("Location: ".$route->getRuta()."contacto/mostrarFormulario");
