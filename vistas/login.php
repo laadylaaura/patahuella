@@ -13,7 +13,7 @@ include 'inc/header.php';
       <div class="card-f bg-light p-3 rounded">
         <div class="card-body">
       
-          <form action="<?php echo $ruta; ?>inicio/validar" method="post">
+          <form action="<?php echo $ruta; ?>inicio/validar" method="post" novalidate>
             <div class="mb-3">
               <label for="email" class="form-label">Correo electrónico</label>
               <input type="email" class="form-control" id="email" name="email" placeholder="nombre@ejemplo.com" required>
@@ -50,3 +50,6 @@ include 'inc/header.php';
 <?php
 include 'inc/footer.php';
 ?>
+<script src="<?php echo $ruta; ?>assets/js/validarLogin.js"></script>
+</body>
+</html>

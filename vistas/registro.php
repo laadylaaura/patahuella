@@ -21,7 +21,7 @@ $ruta = isset($ruta) ? $ruta : '/'; // Ajusta según tu enrutador
     <div class="col-md-6 col-lg-5">
       <div class="card-f bg-light p-3 rounded">
         <div class="card-body">
-          <form action="<?php echo htmlspecialchars($ruta); ?>usuario/registrar" method="post">
+          <form action="<?php echo htmlspecialchars($ruta); ?>usuario/registrar" method="post" novalidate>
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre completo</label>
               <input type="text" class="form-control" id="nombre" name="nombre" 
@@ -85,5 +85,6 @@ $ruta = isset($ruta) ? $ruta : '/'; // Ajusta según tu enrutador
 include 'inc/footer.php';
 ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo $ruta; ?>assets/js/validarRegistro.js"></script>
 </body>
 </html>

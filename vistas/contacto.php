@@ -34,7 +34,7 @@ include 'inc/header.php';
           </div>
           <?php endif; ?>
           
-          <form action="<?php echo $ruta; ?>contacto/procesarContacto" method="POST" id="formularioContacto">
+          <form action="<?php echo $ruta; ?>contacto/procesarContacto" method="POST" id="formularioContacto" novalidate>
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="nombre" class="form-label">Nombre:</label>
