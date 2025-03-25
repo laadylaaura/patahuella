@@ -10,7 +10,10 @@ class FavoritoModelo{
     {
         require_once("./lib/GestorBD.php");
         $gbd = new GestorBD();
-        $consulta = "SELECT * FROM Favoritos WHERE id_usuario = ?";
+        $consulta = "SELECT n.*, f.id_usuario 
+                    FROM Favoritos f 
+                    INNER JOIN Negocios n ON f.id_negocio = n.id_negocio 
+                    WHERE f.id_usuario = ?";
         
         $resultado = $gbd->consultaLectura($consulta, $id_usuario);
         
@@ -23,10 +26,15 @@ class FavoritoModelo{
         require_once("./lib/GestorBD.php");
         $gbd = new GestorBD();
 
-        $consulta = "INSERT INTO Favoritos (id_usuario, id_negocio, fecha_creacion) VALUES (?, ?, NOW())";
+        // Primero verificamos si ya existe el favorito
+        if ($this->getComprobarFavoritoExiste($id_usuario, $id_negocio)) {
+            return false;
+        }
+
+        $consulta = "INSERT INTO Favoritos (id_usuario, id_negocio) VALUES (?, ?)";
         $resultado = $gbd->consultaInsercion($consulta, $id_usuario, $id_negocio);
         
-        return $resultado;
+        return $resultado !== false;
     }
 
     public function getComprobarFavoritoExiste($id_usuario, $id_negocio)

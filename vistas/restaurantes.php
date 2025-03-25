@@ -61,6 +61,8 @@ include '../vistas/inc/header.php';
                                 <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($restaurante['telefono']); ?></p>
                                 <a href="<?php echo htmlspecialchars($restaurante['url']); ?>" target="_blank" 
                                    class="btn btn-primary">Visitar web</a>
+                                <a href="<?php echo $ruta; ?>usuario/agregarFavorito?tipo=restaurante&amp;id=<?php echo urlencode($restaurante['id_negocio']); ?>" 
+                                   class="btn btn2 ms-2">Agregar a Favoritos</a>
                             </div>
                         </div>
                     </div>

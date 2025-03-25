@@ -31,32 +31,30 @@ require_once("./modelo/FavoritosModelo.php");
 $modeloFavoritos = new FavoritoModelo();
 $favoritos = $modeloFavoritos->getListadoFavoritos($usuarioId);
 
+// Debug: Imprimir los favoritos recibidos
+echo "<!-- Debug: Favoritos recibidos: " . print_r($favoritos, true) . " -->";
+
 // Separar favoritos por tipo
 $favoritosSeparados = [
     'restaurantes' => [],
     'alojamientos' => []
 ];
 
-foreach ($favoritos as $favorito) {
-    // Obtener detalles del negocio
-    require_once("./modelo/NegocioModelo.php");
-    $modeloNegocio = new NegocioModelo();
-    $resultado = $modeloNegocio->getNegocioPorId($favorito['id_negocio']);
+foreach ($favoritos as $negocio) {
+    // Debug: Imprimir cada negocio que se está procesando
+    echo "<!-- Debug: Procesando negocio: " . print_r($negocio, true) . " -->";
     
-    // Verificar que el resultado sea un array y tenga elementos
-    if (is_array($resultado) && count($resultado) > 0) {
-        $negocio = $resultado[0]; // Tomar el primer elemento del array
-        
-        // Verificar que el negocio tenga el campo tipo_negocio
-        if (isset($negocio['tipo_negocio'])) {
-            if ($negocio['tipo_negocio'] === 'restaurante') {
-                $favoritosSeparados['restaurantes'][] = $negocio;
-            } else if ($negocio['tipo_negocio'] === 'hotel') {
-                $favoritosSeparados['alojamientos'][] = $negocio;
-            }
+    if (isset($negocio['tipo_negocio'])) {
+        if ($negocio['tipo_negocio'] === 'restaurante') {
+            $favoritosSeparados['restaurantes'][] = $negocio;
+        } else if ($negocio['tipo_negocio'] === 'hotel') {
+            $favoritosSeparados['alojamientos'][] = $negocio;
         }
     }
 }
+
+// Debug: Imprimir los favoritos separados
+echo "<!-- Debug: Favoritos separados: " . print_r($favoritosSeparados, true) . " -->";
 
 include 'inc/header.php';
 ?>
@@ -66,6 +64,20 @@ include 'inc/header.php';
 <div class="container mt-4 mb-4 pb-4">
   <h2 class="text-center text-white text-decoration-underline mb-5">Mi Perfil</h2>
   
+  <?php if (isset($mensajes['exito'])): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?php echo $mensajes['exito']; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
+
+  <?php if (isset($mensajes['error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?php echo $mensajes['error']; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
+
   <div class="row mb-3">
     <!-- Columna de Datos Personales -->
     <div class="col-md-5">

@@ -20,9 +20,51 @@ class UsuarioControlador
             $modelo = new UsuarioModelo();
             $datosUsuario = $modelo->getObtenerUsuarioPorId($usuarioId);
 
+            // Obtener mensajes de la URL si existen
+            $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : null;
+            $error = isset($_GET['error']) ? $_GET['error'] : null;
+
+            // Preparar mensajes para la vista
+            $mensajes = [];
+            if ($mensaje) {
+                switch ($mensaje) {
+                    case 'agregado':
+                        $mensajes['exito'] = 'Negocio agregado a favoritos correctamente';
+                        break;
+                    case 'eliminado':
+                        $mensajes['exito'] = 'Negocio eliminado de favoritos correctamente';
+                        break;
+                    case 'actualizado':
+                        $mensajes['exito'] = 'Perfil actualizado correctamente';
+                        break;
+                }
+            }
+            if ($error) {
+                switch ($error) {
+                    case 'ya_existe':
+                        $mensajes['error'] = 'Este negocio ya está en tus favoritos';
+                        break;
+                    case 'agregar':
+                        $mensajes['error'] = 'Error al agregar el negocio a favoritos';
+                        break;
+                    case 'eliminacion':
+                        $mensajes['error'] = 'Error al eliminar el negocio de favoritos';
+                        break;
+                    case 'actualizacion':
+                        $mensajes['error'] = 'Error al actualizar el perfil';
+                        break;
+                    case 'usuario_no_encontrado':
+                        $mensajes['error'] = 'Usuario no encontrado';
+                        break;
+                }
+            }
+
             require_once("./vistas/Vista.php");
             $vista = new Vista();
-            $vista->render("mi_perfil", ["usuario" => $datosUsuario]);
+            $vista->render("mi_perfil", [
+                "usuario" => $datosUsuario,
+                "mensajes" => $mensajes
+            ]);
         } else {
             // No hay sesión, redireccionar a login
             require_once("./config/Enrutador.php");
@@ -196,6 +238,56 @@ class UsuarioControlador
                 require_once("./config/Enrutador.php");
                 $route = new Enrutador();
                 header("Location: " . $route->getRuta() . "usuario/listarMiPerfil?error=eliminacion");
+            }
+        } else {
+            // Si no hay parámetros, redirigir al perfil
+            require_once("./config/Enrutador.php");
+            $route = new Enrutador();
+            header("Location: " . $route->getRuta() . "usuario/listarMiPerfil");
+        }
+        exit();
+    }
+
+    public function agregarFavorito()
+    {
+        require_once("./lib/GestorSesiones.php");
+        $ses = new GestorSesiones();
+
+        if (!$ses->existeSesion("CLAVE")) {
+            require_once("./config/Enrutador.php");
+            $route = new Enrutador();
+            header("Location: " . $route->getRuta() . "inicio/sesionLogin");
+            exit();
+        }
+
+        if (isset($_GET['id']) && isset($_GET['tipo'])) {
+            $id_negocio = $_GET['id'];
+            $tipo = $_GET['tipo'];
+            $usuarioId = $ses->obtenerValorDeSesion("CLAVE");
+
+            require_once("./modelo/FavoritosModelo.php");
+            $modeloFavoritos = new FavoritoModelo();
+
+            // Verificar si ya existe el favorito
+            if ($modeloFavoritos->getComprobarFavoritoExiste($usuarioId, $id_negocio)) {
+                // Si ya existe, redirigir con mensaje de error
+                require_once("./config/Enrutador.php");
+                $route = new Enrutador();
+                header("Location: " . $route->getRuta() . "usuario/listarMiPerfil?error=ya_existe");
+                exit();
+            }
+
+            // Intentar agregar el favorito
+            if ($modeloFavoritos->getAnadirFavoritos($usuarioId, $id_negocio)) {
+                // Redirigir de vuelta al perfil con mensaje de éxito
+                require_once("./config/Enrutador.php");
+                $route = new Enrutador();
+                header("Location: " . $route->getRuta() . "usuario/listarMiPerfil?mensaje=agregado");
+            } else {
+                // Redirigir de vuelta al perfil con mensaje de error
+                require_once("./config/Enrutador.php");
+                $route = new Enrutador();
+                header("Location: " . $route->getRuta() . "usuario/listarMiPerfil?error=agregar");
             }
         } else {
             // Si no hay parámetros, redirigir al perfil

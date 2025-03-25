@@ -61,6 +61,8 @@ include '../vistas/inc/header.php';
                                 <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($alojamiento['telefono']); ?></p>
                                 <a href="<?php echo htmlspecialchars($alojamiento['url']); ?>" target="_blank" 
                                    class="btn btn-primary">Visitar web</a>
+                                <a href="<?php echo $ruta; ?>usuario/agregarFavorito?tipo=alojamiento&amp;id=<?php echo urlencode($alojamiento['id_negocio']); ?>" 
+                                   class="btn btn2 ms-2">Agregar a Favoritos</a>
                             </div>
                         </div>
                     </div>
