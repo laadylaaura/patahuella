@@ -30,11 +30,6 @@ require_once('./vistas/inc/welcome.php');
 require_once('./vistas/recomendados.php');
 ?>
 
-<!-- <?php
-require_once('./vistas/contacto.php');
-?> -->
-
-
 <?php
 require_once('./vistas/inc/footer.php');
 ?>
