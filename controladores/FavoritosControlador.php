@@ -56,7 +56,7 @@ class FavoritosControlador {
             if(isset($_POST["id_producto"])){
                 require_once("./modelo/FavoritosModelo.php");
                 $modelo = new FavoritoModelo();
-                $resultado = $modelo->eliminarFavorito($ses->obtenerValorDeSesion("CLAVE"), $_POST["id_producto"]);
+                $resultado = $modelo->getEliminarFavorito($ses->obtenerValorDeSesion("CLAVE"), $_POST["id_producto"]);
                 
                 if($resultado){
                     echo json_encode(["success" => true, "message" => "Producto eliminado de favoritos"]);

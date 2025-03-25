@@ -25,6 +25,12 @@ class InicioControlador
             // Mostrar el formulario de login
             require_once('./vistas/Vista.php');
             $data = [];
+            
+            // Comprobar si viene redirigido de un registro exitoso
+            if (isset($_GET['registro']) && $_GET['registro'] == 'exitoso') {
+                $data['exito'] = '¡Registro completado con éxito! Ya puedes iniciar sesión con tus credenciales.';
+            }
+            
             $vista = new Vista();
             $vista->render("login", $data);
         }

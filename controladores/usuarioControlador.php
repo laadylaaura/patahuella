@@ -187,10 +187,10 @@ class UsuarioControlador
             $resultado = $modelo->registrarUsuario($nombre, $email, $contrasena);
 
             if ($resultado['exito']) {
-                // Redirigir a login con mensaje de éxito
+                // Redirigir al login con mensaje de éxito
                 require_once("./config/Enrutador.php");
                 $route = new Enrutador();
-                header("Location: " . $route->getRuta() . "inicio/sesionLogin?registro=exito");
+                header("Location: " . $route->getRuta() . "inicio/sesionLogin?registro=exitoso");
                 exit();
             } else {
                 // Volver al formulario con mensaje de error del modelo

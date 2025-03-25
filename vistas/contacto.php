@@ -34,7 +34,7 @@ include 'inc/header.php';
           </div>
           <?php endif; ?>
           
-          <form action="<?php echo $ruta; ?>contacto/procesarContacto" method="POST">
+          <form action="<?php echo $ruta; ?>contacto/procesarContacto" method="POST" id="formularioContacto">
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="nombre" class="form-label">Nombre:</label>
@@ -63,3 +63,6 @@ include 'inc/header.php';
 <?php
 include 'inc/footer.php';
 ?>
+
+<!-- Nuestro script de validación con JavaScript puro -->
+<script src="<?php echo $ruta; ?>assets/js/validacionContacto.js"></script>
