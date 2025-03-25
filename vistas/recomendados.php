@@ -129,6 +129,7 @@ function obtenerRestaurantesPopulares($conexion) {
                 'id' => $fila['id_negocio'],
                 'nombre' => $fila['nombre'],
                 'descripcion' => $fila['descripcion'],
+                'url' => $fila['url'],
                 'direccion' => $fila['direccion'],
                 'imagen' => $ruta_imagen,
                 'visitas' => $fila['visitas'] ?? 0,
@@ -161,6 +162,7 @@ function obtenerAlojamientosPopulares($conexion) {
                 'nombre' => $fila['nombre'],
                 'descripcion' => $fila['descripcion'],
                 'direccion' => $fila['direccion'],
+                'url' => $fila['url'],
                 'imagen' => $ruta_imagen,
                 'visitas' => $fila['visitas'] ?? 0,
                 'rating' => $fila['rating'] ?? 0
@@ -224,7 +226,11 @@ $conexion->close();
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="<?php echo $ruta; ?>negocio/detalle?id=<?php echo $restaurante['id']; ?>" class="btn btn1">Ver detalles</a>
+                            <?php if (isset($restaurante['url']) && !empty($restaurante['url'])): ?>
+                                <a href="<?php echo htmlspecialchars($restaurante['url']); ?>" target="_blank" class="btn btn-primary">Visitar web</a>
+                            <?php else: ?>
+                                <a href="<?php echo $ruta; ?>vistas/error404.php" class="btn btn-warning">Sitio no disponible</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -250,7 +256,11 @@ $conexion->close();
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="<?php echo $ruta; ?>negocio/detalle?id=<?php echo $alojamiento['id']; ?>" class="btn btn1">Ver detalles</a>
+                            <?php if (isset($alojamiento['url']) && !empty($alojamiento['url'])): ?>
+                                <a href="<?php echo htmlspecialchars($alojamiento['url']); ?>" target="_blank" class="btn btn-primary">Visitar web</a>
+                            <?php else: ?>
+                                <a href="<?php echo $ruta; ?>vistas/error404.php" class="btn btn-warning">Sitio no disponible</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
