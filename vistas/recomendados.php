@@ -210,7 +210,7 @@ $conexion->close();
 <div class="container mt-5">
     <!-- Restaurantes más visitados -->
     <section class="mb-5">
-        <h2 class="text-center mb-4 text-white text-decoration-underline">Restaurantes más populares</h2>
+        <h2 class="text-center mb-4 text-white ">Restaurantes más populares</h2>
         <div class="row">
             <?php foreach ($restaurantesPopulares as $restaurante): ?>
                 <div class="col-md-4 mb-4">
@@ -240,7 +240,7 @@ $conexion->close();
 
     <!-- Alojamientos más visitados -->
     <section class="mb-5">
-        <h2 class="text-center mb-4 text-white text-decoration-underline">Alojamientos más populares</h2>
+        <h2 class="text-center mb-4 text-white ">Alojamientos más populares</h2>
         <div class="row">
             <?php foreach ($alojamientosPopulares as $alojamiento): ?>
                 <div class="col-md-4 mb-4">

@@ -8,7 +8,6 @@ public function getRuta(){
     $conf = Configuracion::getInstance();
 
     $ruta = $conf->getRutaServidor();
-    echo $ruta;
     return $ruta;
 }
 

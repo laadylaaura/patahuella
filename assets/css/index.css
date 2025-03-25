@@ -1,4 +1,4 @@
-/* Asegurar que el html y body ocupen todo el alto disponible */
+/* ESTILOS GENERALES */
 html, body {
   height: 100%;
   margin: 0;
@@ -12,50 +12,111 @@ body {
   background-color: #030720;
 }
 
-/* Estructura principal */
+/* ESTRUCTURA PRINCIPAL */
 .content-wrapper {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
+/* HEADER Y NAVEGACIÓN */
 header {
-  min-height: 60px;
+  min-height: 100px;
   background-color: #d3941e;
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
   padding: 0;
+  display: flex;
+  align-items: center;
 }
 
-/* Ajustes responsive para el navbar */
 .navbar {
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   margin: 0;
+  width: 100%;
 }
 
+.navbar .container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Logo y marca */
 .navbar-brand {
   color: white !important;
   font-size: 1.3rem;
   font-weight: bold;
+  position: relative;
+  transition: all 0.3s ease;
+  padding-right: 0;
+  border-bottom: 2px solid transparent;
 }
 
-.navbar-nav .nav-link {
+.navbar-brand::before {
+  content: '';
+}
+
+.navbar-brand::after {
+  content: '🐾';
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  opacity: 0;
+  filter: none;
+  transition: all 0.4s ease;
+}
+
+.navbar-brand:hover {
+  border-bottom: 2px solid white;
+}
+
+.navbar-brand:hover::after {
+  opacity: 1;
+  right: -25px;
+  transform: translateY(-50%) rotate(-5deg);
+}
+
+/* Enlaces de navegación */
+.navbar-nav .nav-link, 
+.navbar-nav .nav-item .nav-link {
   color: white !important;
-  padding: 0.5rem 1rem;
+  font-weight: normal;
+  margin: 0 5px;
+  border-bottom: 2px solid transparent;
+  position: relative;
   transition: all 0.3s ease;
 }
 
-
-.navbar-nav .nav-link:hover {
-  color: rgba(255, 255, 255, 0.8) !important;
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-item .nav-link:hover {
+  color: white !important;
+  font-weight: bold;
+  transform: scale(1.05);
+  border-bottom: 2px solid white;
+  letter-spacing: 0.5px;
 }
 
+.navbar-nav .nav-item .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transition: width 0.3s ease;
+}
 
+.navbar-nav .nav-item .nav-link:hover::after {
+  width: 100%;
+}
+
+/* Botón de navegación móvil */
 .navbar-toggler {
   border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 0.25rem 0.5rem;
@@ -67,7 +128,240 @@ header {
   height: 1.5em;
 }
 
-/* Media queries para ajustes responsive */
+/* SECCIÓN WELCOME */
+#welcome {
+  height: 500px;
+  background-color: #030720;
+}
+
+#welcomeText {
+  margin-top: 120px;
+}
+
+#welcome h1:nth-child(1) {
+  color: white;
+  font-weight: bold;
+}
+
+#welcome h1:nth-child(2) {
+  color: rgb(170, 68, 0);
+}
+
+/* Botones circulares en Welcome */
+#welcome .btn-light {
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+#welcome .btn-light:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+#welcome .btn-light img {
+  transition: all 0.3s ease;
+}
+
+#welcome .btn-light:nth-child(1) img {
+  animation: float 3s ease-in-out infinite;
+}
+
+#welcome .btn-light:nth-child(2) img {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+#welcome .btn-light:hover::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255,255,255,0.13);
+  transform: rotate(35deg);
+  transition: all 0.55s ease-in-out;
+}
+
+/* TÍTULOS Y ENCABEZADOS */
+.h1-Res, .h1-Alo {
+  color: rgb(0, 0, 0);
+  text-decoration: underline;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 50px;
+}
+
+.card-title {
+  color: rgb(0, 0, 0);
+  text-decoration: underline;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 22px;
+}
+
+/* TARJETAS Y CONTENEDORES */
+.card {
+  background-color: #eeee97 !important;
+  border-color: white !important;
+  margin-bottom: 20px;
+}
+
+.card-f {
+  border-radius: 15px;
+}
+
+/* SECCIÓN CONTACTO */
+#seccionContacto {
+  background-color: #eeee97;
+  padding: 50px 0 70px 0;
+  margin: 0 0 -20px 0;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+#contenedorContacto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#registroContainer {
+  background-color: #030720;
+}
+
+/* BOTONES */
+.btn.btn1 {
+  background-color: blue !important;
+  border-color: blue !important;
+  color: #fff !important;
+}
+
+/* Botón naranja (btn2) */
+.btn.btn2 {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: rgb(170, 68, 0) !important;
+  border-color: rgb(170, 68, 0) !important;
+  color: #fff !important;
+}
+
+.btn.btn2:hover {
+  background-color: rgb(145, 55, 0) !important;
+  border-color: rgb(145, 55, 0) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn.btn2:active {
+  background-color: rgb(135, 50, 0) !important;
+  border-color: rgb(135, 50, 0) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón primario */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #0a53be;
+  border-color: #0a53be;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+/* FOOTER */
+footer {
+  flex-shrink: 0;
+  background-color: #000000;
+  width: 100%;
+  padding: 30px 0;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Enlace de contacto en footer */
+footer h6 a.text-white {
+  position: relative;
+  transition: all 0.3s ease;
+  padding-right: 22px;
+  display: inline-block;
+}
+
+footer h6 a.text-white::after {
+  content: '→';
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+footer h6 a.text-white:hover {
+  color: #d3941e !important;
+  text-decoration: underline !important;
+  padding-right: 28px;
+}
+
+footer h6 a.text-white:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* PAGINACIÓN */
+.pagination .page-item .page-link {
+  color: #d3941e;
+  border-color: rgba(211, 148, 30, 0.2);
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #d3941e;
+  color: white;
+  border-color: #d3941e;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #d3941e !important;
+  border-color: #d3941e !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #ccc;
+  border-color: #eee;
+  background-color: #f8f8f8;
+}
+
+/* MEDIA QUERIES */
 @media (max-width: 991.98px) {
   .navbar-collapse {
     position: absolute;
@@ -99,97 +393,5 @@ header {
   .navbar-nav .nav-link:hover {
     background-color: rgba(0, 0, 0, 0.15);
   }
-}
-
-#welcome{
-    height: 500px;
-    background-color:#030720 ;
-}
-
-#welcomeText{
-    margin-top: 120px;
-}
-
-#welcome h1:nth-child(1) {
-    color:white;
-    font-weight: bold;
-  }
-
-  #welcome h1:nth-child(2) {
-    color:rgb(170, 68, 0);
-  }
-
-
-.h1-Res{
-    color:rgb(0, 0, 0);
-    text-decoration: underline;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 50px;
-  }
-  .h1-Alo{
-    color:rgb(0, 0, 0);
-    text-decoration: underline;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 50px;
-  }
-  .card {
-    background-color: #eeee97 !important;
-    border-color: white !important;
-    margin-bottom: 20px;
-}
-
-.card-f {
-  border-radius: 15px;
-}
-
-/* Sección de contacto - MODIFICADO CON MARGEN NEGATIVO */
-#seccionContacto {
-    background-color: #eeee97;
-    padding: 50px 0 70px 0; /* Aumentado el padding inferior */
-    margin: 0 0 -20px 0; /* Margen negativo inferior para superponerse */
-    width: 100%;
-    position: relative; /* Para control de posicionamiento */
-    z-index: 1; /* Valor bajo para que esté debajo del footer */
-}
-
-#contenedorContacto {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#registroContainer{
-  background-color: #030720;
-}
-
-
-
-.btn.btn1 {
-    background-color: blue !important;
-    border-color: blue !important;
-    color: #fff !important;
-}
-.btn.btn2 {
-    background-color: rgb(170, 68, 0) !important;
-    border-color: rgb(170, 68, 0) !important;
-    color: #fff !important;
-}
-
-.card-title{
-    color:rgb(0, 0, 0);
-    text-decoration: underline;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 22px;
-}
-
-/* Footer - MODIFICADO */
-footer {
-    flex-shrink: 0;
-    background-color: #000000;
-    width: 100%;
-    padding: 30px 0;
-    margin: 0;
-    position: relative; /* Para control de posicionamiento */
-    z-index: 2; /* Valor más alto para superponerse a seccionContacto */
 }
 

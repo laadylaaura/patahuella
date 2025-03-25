@@ -8,7 +8,6 @@ class Controlador
 
     public function main()
     {
-       print_r($_GET);
         $controlador="";
         $accion="";
         if (isset($_GET["controlador"]) and !empty($_GET["controlador"]))
