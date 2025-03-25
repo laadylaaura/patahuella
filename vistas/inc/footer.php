@@ -35,7 +35,7 @@
             
             <!-- Contacto -->
             <div class="col-12 col-md-4">
-                <h6 class="mb-3"><a href="./vistas/contacto.php" class="text-white text-decoration-none">Contacto</a></h6>
+                <h6 class="mb-3"><a href="<?php echo $ruta; ?>vistas/contacto.php" class="text-white text-decoration-none">Contacto</a></h6>
                 <p class="text-white-50 mb-1"><i class="fas fa-envelope me-2"></i> <a href="mailto:info@patayhuella.com" class="text-white-50">info@patayhuella.com</a></p>
                 <p class="text-white-50 mb-1"><i class="fas fa-phone me-2"></i> +34 123 456 789</p>
                 <p class="text-white-50"><i class="fas fa-map-marker-alt me-2"></i> Calle Principal, 123, Barcelona</p>

@@ -20,35 +20,85 @@ body {
 }
 
 /* Header */
-
-
 header {
-  height: 700px;
+  min-height: 60px;
   background-color: #d3941e;
   position: sticky;
   top: 0;
-  z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
+  z-index: 1000;
   width: 100%;
+  padding: 0;
 }
 
-/* Opcional: ajusta el estilo de la navbar si es necesario */
+/* Ajustes responsive para el navbar */
 .navbar {
-  padding: 1rem 0; /* Ajusta el padding si lo deseas */
+  padding: 0.5rem 1rem;
   margin: 0;
 }
 
-/* Estilos para hacer el logo y la navegación de color blanco */
 .navbar-brand {
   color: white !important;
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 
 .navbar-nav .nav-link {
   color: white !important;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
 }
 
-/* Efecto hover para los enlaces de navegación */
+
 .navbar-nav .nav-link:hover {
   color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+
+.navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  width: 1.5em;
+  height: 1.5em;
+}
+
+/* Media queries para ajustes responsive */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background-color: #d3941e;
+    padding: 0.5rem;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .navbar-nav {
+    margin: 0;
+    padding: 0.5rem 0;
+  }
+  
+  .navbar-nav .nav-item {
+    margin: 0.25rem 0;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    display: block;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
 }
 
 #welcome{
