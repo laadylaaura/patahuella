@@ -10,7 +10,7 @@ class FavoritoModelo{
     {
         require_once("./lib/GestorBD.php");
         $gbd = new GestorBD();
-        $consulta = "SELECT n.*, f.id_usuario 
+        $consulta = "SELECT n.*, f.id_usuario, n.tipo_negocio, n.nombre, n.id_negocio 
                     FROM Favoritos f 
                     INNER JOIN Negocios n ON f.id_negocio = n.id_negocio 
                     WHERE f.id_usuario = ?";

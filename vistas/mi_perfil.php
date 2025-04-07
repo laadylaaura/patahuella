@@ -45,9 +45,9 @@ foreach ($favoritos as $negocio) {
     echo "<!-- Debug: Procesando negocio: " . print_r($negocio, true) . " -->";
     
     if (isset($negocio['tipo_negocio'])) {
-        if ($negocio['tipo_negocio'] === 'restaurante') {
+        if (strtolower($negocio['tipo_negocio']) === 'restaurante') {
             $favoritosSeparados['restaurantes'][] = $negocio;
-        } else if ($negocio['tipo_negocio'] === 'hotel') {
+        } else if (strtolower($negocio['tipo_negocio']) === 'hotel') {
             $favoritosSeparados['alojamientos'][] = $negocio;
         }
     }
@@ -55,6 +55,11 @@ foreach ($favoritos as $negocio) {
 
 // Debug: Imprimir los favoritos separados
 echo "<!-- Debug: Favoritos separados: " . print_r($favoritosSeparados, true) . " -->";
+
+// Asegurarse de que la variable $ruta está definida
+require_once("./config/Enrutador.php");
+$route = new Enrutador();
+$ruta = $route->getRuta();
 
 include 'inc/header.php';
 ?>
